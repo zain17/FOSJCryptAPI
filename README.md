@@ -1,2 +1,2 @@
-"# SHA512_Testing" 
-"# SHA512_Testing" 
+"# FOSJCrypt (only for database generated with FOSUser:Default encoder-sha512)" 
+

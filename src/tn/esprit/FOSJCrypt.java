@@ -1,20 +1,3 @@
-/*
- * Copyright (C) 2017 Dominik Schadow, dominikschadow@gmail.com
- *
- * This file is part of the Java Security project.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package tn.esprit;
 
 
@@ -65,6 +48,14 @@ public class FOSJCrypt {
         }
         return null;
     }
+
+    /**
+     * tgeneri salt kif al yasn3ou fosuser(bel algorrithm par défaut :sh512)
+     * igeneri 32 byte et y7awelhom en base64
+     * ibadel el + bel .
+     * ine7i el char el le5er
+     * @return
+     */
     private static String generateSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_SIZE];
@@ -73,6 +64,17 @@ public class FOSJCrypt {
         String saltPlusDot= saltBase64_encoded.replace("+",".");
         return saltPlusDot.substring(0,saltPlusDot.length()-1);
     }
+
+    /**
+     * 4999 itération dans la boucles une seul avant la boucle
+     * 1ére : fait merge passwrd et sal par méthode
+     * dans la boucle il réutilise le hash précédant pour générer le nouveau message en clair
+     * @param password
+     * @param salt
+     * @return
+     * @throws NoSuchAlgorithmException
+     * @throws UnsupportedEncodingException
+     */
     private static byte[] encodePassword(String password,String salt) throws NoSuchAlgorithmException,
             UnsupportedEncodingException {
         String mergedPasswordAndSalt =mergePasswordAndSalt(password, salt);
@@ -83,6 +85,13 @@ public class FOSJCrypt {
         }
         return hash;
     }
+
+    /**
+     * i7ot des accolade mnloul welle5er mta3 salt
+     * @param pass
+     * @param salt
+     * @return
+     */
     private static String mergePasswordAndSalt(String pass, String salt) {
         if (salt == null) {
             return salt;
@@ -91,7 +100,7 @@ public class FOSJCrypt {
         return pass+cg+salt+cd;
     }
     /*
-     *  paramétre: originalHash el hash ala mel base de donnés mais en byte donc lazem el hash ala on String tetbadel bytes
+     *  paramétre: originalHash el hash ala mel base de donnés mais en byte donc lazem el hash ala en String tetbadel bytes
      */
     public static   boolean verifyPassword(byte[] originalHash, String passwordClair, String salt) throws
             NoSuchAlgorithmException, UnsupportedEncodingException {
